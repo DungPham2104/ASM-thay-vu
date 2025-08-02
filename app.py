@@ -12,6 +12,13 @@ if uploaded_file is not None:
 else:
     st.warning("⚠️ Vui lòng tải lên file amazon.csv để tiếp tục.")
     st.stop()
+# Đọc dữ liệu
+df = pd.read_csv(uploaded_file)
+
+# Chuyển kiểu dữ liệu
+numeric_cols = ['discounted_price', 'discount_percentage', 'rating_count', 'rating']
+df[numeric_cols] = df[numeric_cols].apply(pd.to_numeric, errors='coerce')
+df.dropna(subset=numeric_cols, inplace=True)
 
 
 st.title("📊 Phân tích dữ liệu Amazon")
